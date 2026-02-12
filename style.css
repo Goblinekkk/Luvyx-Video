@@ -7,17 +7,20 @@ body, html {
     margin: 0; padding: 0;
     width: 100%; height: 100%;
     background: #000; color: #fff;
-    font-family: sans-serif; overflow: hidden;
+    font-family: sans-serif; 
+    overflow: hidden; /* Zamezí scrollování celého webu */
 }
 
+/* Stránky */
 .page {
-    position: absolute; top: 0; width: 100%;
-    height: calc(100% - 70px);
-    display: none; overflow-y: auto;
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; /* Celá výška */
+    display: none;
 }
 .active { display: block; }
 
 /* Home Page */
+#home-page { overflow-y: auto; padding-bottom: 80px; }
 .logo { padding: 20px; color: var(--accent); letter-spacing: 2px; }
 .story-bar { display: flex; gap: 15px; padding: 10px 20px; overflow-x: auto; }
 .story-container { display: flex; flex-direction: column; align-items: center; min-width: 70px; }
@@ -26,42 +29,78 @@ body, html {
 .story-name { font-size: 10px; margin-top: 5px; color: #bbb; }
 .post-card { background: #111; margin: 15px; padding: 20px; border-radius: 12px; }
 
-/* Video Feed - Oprava Mobile View */
-#video-page { height: calc(100% - 70px); overflow-y: scroll; scroll-snap-type: y mandatory; }
-.video-container { position: relative; width: 100%; height: 100%; scroll-snap-align: start; background: #000; }
-video { width: 100%; height: 100%; object-fit: cover; }
+/* Video Feed - KLÍČOVÁ ČÁST PRO SVAJP */
+#video-page {
+    height: 100%; /* Důležité: Zabírá celé okno */
+}
+
+.video-feed {
+    height: 100%;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+}
+.video-feed::-webkit-scrollbar { display: none; }
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Každé video přesně na výšku displeje */
+    scroll-snap-align: start;
+    background: #000;
+    display: flex;
+    align-items: center;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Video vyplní obrazovku */
+}
 
 /* Overlay - Prvky PŘES video */
 .video-overlay {
-    position: absolute; bottom: 0; left: 0; width: 100%;
-    height: 100%; pointer-events: none; /* Kliky propadnou na video */
-    background: linear-gradient(transparent 70%, rgba(0,0,0,0.8));
-    display: flex; justify-content: space-between; align-items: flex-end;
-    padding: 20px; box-sizing: border-box;
+    position: absolute;
+    bottom: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(transparent 60%, rgba(0,0,0,0.7));
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 80px 20px 100px 20px; /* Padding, aby to nebylo pod navigací */
+    box-sizing: border-box;
+    pointer-events: none; /* Kliky propadnou na video, pokud neklikneš na info/buttony */
 }
 
-.video-info, .side-actions { pointer-events: auto; } /* Aktivujeme kliky jen na info a ikony */
+.video-info, .side-actions { pointer-events: auto; }
 
-.video-info { max-width: 70%; margin-bottom: 10px; }
-.username { font-weight: bold; font-size: 1.1rem; }
-.description { font-size: 0.9rem; margin: 5px 0 0; }
+.video-info { max-width: 70%; }
+.username { font-weight: bold; font-size: 1.1rem; text-shadow: 1px 1px 2px #000; }
+.description { font-size: 0.9rem; margin-top: 5px; text-shadow: 1px 1px 2px #000; }
 
 .side-actions {
-    display: flex; flex-direction: column; gap: 20px;
-    align-items: center; margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }
 
 .action-btn {
-    display: flex; flex-direction: column; align-items: center;
-    font-size: 1.5rem; cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
 }
-.count { font-size: 0.7rem; margin-top: 4px; }
+
+.action-btn .icon { font-size: 2rem; transition: transform 0.1s; }
+.count { font-size: 0.8rem; font-weight: bold; margin-top: 2px; }
 
 /* Navigace */
 .bottom-nav {
     position: fixed; bottom: 0; width: 100%; height: 70px;
-    background: #000; border-top: 1px solid #222;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+    border-top: 1px solid #222;
     display: flex; justify-content: space-around; align-items: center;
+    z-index: 999;
 }
 .nav-item { font-size: 1.5rem; opacity: 0.4; }
 .active-nav { opacity: 1; color: var(--accent); }
