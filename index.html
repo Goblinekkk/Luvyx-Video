@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luvyx Video</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: #000;
+            font-family: sans-serif;
+            overflow: hidden; /* Zabrání klasickému scrollu */
+        }
+
+        /* Kontejner pro vertikální feed */
+        .video-feed {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+        }
+
+        /* Jednotlivý video post */
+        .video-container {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Overlay s informacemi (jako na IG) */
+        .video-overlay {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            color: white;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        .side-bar {
+            position: absolute;
+            right: 15px;
+            bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            color: white;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-feed">
+    <div class="video-container">
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" loop muted onclick="this.paused ? this.play() : this.pause()"></video>
+        <div class="video-overlay">
+            <h3>@LuvyxUser</h3>
+            <p>Vítejte v Luvyx Video! #LuvyxEkosystém</p>
+        </div>
+        <div class="side-bar">
+            <span>❤️</span>
+            <span>💬</span>
+            <span>✈️</span>
+        </div>
+    </div>
+
+    <div class="video-container">
+        <video src="https://www.w3schools.com/html/movie.mp4" loop muted onclick="this.paused ? this.play() : this.pause()"></video>
+        <div class="video-overlay">
+            <h3>@Goblinekkk</h3>
+            <p>Tohle běží na LuvyxOS. 🔥</p>
+        </div>
+        <div class="side-bar">
+            <span>❤️</span>
+            <span>💬</span>
+            <span>✈️</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Automatické přehrávání videa, které je právě vidět
+    const videos = document.querySelectorAll('video');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.play();
+            } else {
+                entry.target.pause();
+            }
+        });
+    }, { threshold: 0.5 });
+
+    videos.forEach(video => observer.observe(video));
+</script>
+
+</body>
+</html>
