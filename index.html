@@ -2,108 +2,183 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Luvyx Video</title>
     <style>
+        :root {
+            --bg-color: #050505;
+            --accent-color: #0078ff;
+            --text-color: #ffffff;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
+            width: 100%;
             height: 100%;
-            background: #000;
-            font-family: sans-serif;
-            overflow: hidden; /* Zabrání klasickému scrollu */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
         }
 
-        /* Kontejner pro vertikální feed */
-        .video-feed {
+        /* Hlavní kontejner pro vertikální scrollování */
+        .feed {
             height: 100vh;
             overflow-y: scroll;
-            scroll-snap-type: y mandatory;
+            scroll-snap-type: y mandatory; /* Toto vytvoří efekt "přeskakování" po videích */
+            scrollbar-width: none; /* Skryje scrollbar pro Firefox */
         }
 
-        /* Jednotlivý video post */
-        .video-container {
-            height: 100vh;
-            width: 100%;
-            scroll-snap-align: start;
+        .feed::-webkit-scrollbar {
+            display: none; /* Skryje scrollbar pro Chrome/Safari */
+        }
+
+        /* Jedna video karta */
+        .video-card {
             position: relative;
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #000;
         }
 
         video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Video vyplní celou obrazovku mobilu */
         }
 
-        /* Overlay s informacemi (jako na IG) */
-        .video-overlay {
+        /* Informace o videu (vlevo dole) */
+        .info-overlay {
             position: absolute;
-            bottom: 30px;
-            left: 20px;
-            color: white;
-            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+            bottom: 80px;
+            left: 15px;
+            z-index: 10;
+            max-width: 70%;
         }
 
-        .side-bar {
+        .username {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Boční tlačítka (vpravo) */
+        .side-actions {
             position: absolute;
             right: 15px;
             bottom: 100px;
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 20px;
-            color: white;
-            font-size: 24px;
+            z-index: 10;
+        }
+
+        .action-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            font-size: 1.4rem;
+        }
+
+        /* Horní lišta */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            letter-spacing: 2px;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
         }
     </style>
 </head>
 <body>
 
-<div class="video-feed">
-    <div class="video-container">
-        <video src="https://www.w3schools.com/html/mov_bbb.mp4" loop muted onclick="this.paused ? this.play() : this.pause()"></video>
-        <div class="video-overlay">
-            <h3>@LuvyxUser</h3>
-            <p>Vítejte v Luvyx Video! #LuvyxEkosystém</p>
+    <div class="top-nav">LUVYX VIDEO</div>
+
+    <div class="feed" id="videoFeed">
+        <div class="video-card">
+            <video loop src="https://vjs.zencdn.net/v/oceans.mp4" onclick="togglePlay(this)"></video>
+            <div class="info-overlay">
+                <div class="username">@goblinekkk</div>
+                <div class="description">První test Luvyx Video systému! 🚀 #ecosystem #web</div>
+            </div>
+            <div class="side-actions">
+                <div class="action-button"><div class="icon">❤️</div><span>12k</span></div>
+                <div class="action-button"><div class="icon">💬</div><span>45</span></div>
+                <div class="action-button"><div class="icon">🔗</div></div>
+            </div>
         </div>
-        <div class="side-bar">
-            <span>❤️</span>
-            <span>💬</span>
-            <span>✈️</span>
+
+        <div class="video-card">
+            <video loop src="https://www.w3schools.com/html/movie.mp4" onclick="togglePlay(this)"></video>
+            <div class="info-overlay">
+                <div class="username">@luvyx_ai</div>
+                <div class="description">Jak se vám líbí nový design? 🔥</div>
+            </div>
+            <div class="side-actions">
+                <div class="action-button"><div class="icon">❤️</div><span>850</span></div>
+                <div class="action-button"><div class="icon">💬</div><span>12</span></div>
+                <div class="action-button"><div class="icon">🔗</div></div>
+            </div>
         </div>
     </div>
 
-    <div class="video-container">
-        <video src="https://www.w3schools.com/html/movie.mp4" loop muted onclick="this.paused ? this.play() : this.pause()"></video>
-        <div class="video-overlay">
-            <h3>@Goblinekkk</h3>
-            <p>Tohle běží na LuvyxOS. 🔥</p>
-        </div>
-        <div class="side-bar">
-            <span>❤️</span>
-            <span>💬</span>
-            <span>✈️</span>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Automatické přehrávání videa, které je právě vidět
-    const videos = document.querySelectorAll('video');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.play();
+    <script>
+        // Funkce pro pauzu/přehrávání kliknutím
+        function togglePlay(video) {
+            if (video.paused) {
+                video.play();
             } else {
-                entry.target.pause();
+                video.pause();
             }
+        }
+
+        // Automatické přehrávání videa při nascrollování
+        const observerOptions = {
+            threshold: 0.7
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target.querySelector('video');
+                if (entry.isIntersecting) {
+                    video.play();
+                } else {
+                    video.pause();
+                    video.currentTime = 0; // Resetuje video při odchodu
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.video-card').forEach(card => {
+            observer.observe(card);
         });
-    }, { threshold: 0.5 });
-
-    videos.forEach(video => observer.observe(video));
-</script>
-
+    </script>
 </body>
-</html>
+    </html>
