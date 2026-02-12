@@ -9,64 +9,51 @@
 <body>
 
     <div id="home-page" class="page active">
-        <header>
-            <h2 class="logo">LUVYX</h2>
-        </header>
-        
+        <header><h2 class="logo">LUVYX</h2></header>
         <div class="story-bar">
             <div class="story-container">
-                <div class="story"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=goblinekkk" alt="user"></div>
+                <div class="story"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=goblinekkk"></div>
                 <span class="story-name">goblinekkk</span>
             </div>
             <div class="story-container">
-                <div class="story"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=luvyx" alt="user"></div>
+                <div class="story"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=luvyx"></div>
                 <span class="story-name">luvyx_ai</span>
             </div>
-            <div class="story-container">
-                <div class="story"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=test" alt="user"></div>
-                <span class="story-name">tester</span>
-            </div>
-            <div class="story-container">
-                <div class="story"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed=dev" alt="user"></div>
-                <span class="story-name">developer</span>
-            </div>
         </div>
-        
         <div class="post-card">
-            <h4>Vítejte v Luvyx Video 🚀</h4>
-            <p>Tento projekt je součástí tvého ekosystému. Přepni na ikonu profilu dole a sleduj náhodná videa od komunity.</p>
-        </div>
-
-        <div class="post-card">
-            <h4>Aktualizace v1.0</h4>
-            <p>Dnes jsme spustili nový design, který lépe sedí k LuvyxOS a Luvyx Browseru.</p>
+            <h4>Vítejte v Luvyx Video</h4>
+            <p>Klikni na ikonu profilu (panáček) dole pro vertikální feed videí!</p>
         </div>
     </div>
 
     <div id="video-page" class="page">
         <div class="video-feed">
             <div class="video-container">
-                <video loop src="https://vjs.zencdn.net/v/oceans.mp4"></video>
-                <div class="video-info">
-                    <span class="username">@goblinekkk</span>
-                    <p class="description">První test videa v novém designu! #Luvyx</p>
-                </div>
-                <div class="side-actions">
-                    <div class="action">❤️</div>
-                    <div class="action">💬</div>
-                    <div class="action">✈️</div>
+                <video loop playsinline src="https://vjs.zencdn.net/v/oceans.mp4"></video>
+                <div class="video-overlay">
+                    <div class="video-info">
+                        <span class="username">@goblinekkk</span>
+                        <p class="description">První test v novém designu! #Luvyx</p>
+                    </div>
+                    <div class="side-actions">
+                        <div class="action-btn" onclick="likeVideo(this)">❤️ <span class="count">12</span></div>
+                        <div class="action-btn" onclick="alert('Komentáře brzy!')">💬 <span class="count">2</span></div>
+                        <div class="action-btn" onclick="shareVideo()">✈️</div>
+                    </div>
                 </div>
             </div>
             <div class="video-container">
-                <video loop src="https://www.w3schools.com/html/movie.mp4"></video>
-                <div class="video-info">
-                    <span class="username">@luvyx_ai</span>
-                    <p class="description">Budoucnost ekosystému začíná právě teď. 🔥</p>
-                </div>
-                <div class="side-actions">
-                    <div class="action">❤️</div>
-                    <div class="action">💬</div>
-                    <div class="action">✈️</div>
+                <video loop playsinline src="https://www.w3schools.com/html/movie.mp4"></video>
+                <div class="video-overlay">
+                    <div class="video-info">
+                        <span class="username">@luvyx_ai</span>
+                        <p class="description">Budoucnost ekosystému začíná teď. 🔥</p>
+                    </div>
+                    <div class="side-actions">
+                        <div class="action-btn" onclick="likeVideo(this)">❤️ <span class="count">85</span></div>
+                        <div class="action-btn" onclick="alert('Komentáře brzy!')">💬 <span class="count">5</span></div>
+                        <div class="action-btn" onclick="shareVideo()">✈️</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,8 +61,8 @@
 
     <nav class="bottom-nav">
         <div class="nav-item active-nav" onclick="showPage('home-page', this)">🏠</div>
-        <div class="nav-item">🔍</div>
-        <div class="nav-item">➕</div>
+        <div class="nav-item" onclick="alert('Hledání v přípravě')">🔍</div>
+        <div class="nav-item" onclick="alert('Nahrávání v přípravě')">➕</div>
         <div class="nav-item" onclick="showPage('video-page', this)">👤</div>
     </nav>
 
